@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucida — Discover London's Finest Beauty Providers</title>
+    <meta name="description" content="Find the best nails, lashes, braids, barbers and more near you. Lucida connects you with London's top independent beauty providers. Zero commission.">
+    <meta name="theme-color" content="#2a120a">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Lucida — Discover London's Finest Beauty Providers">
+    <meta property="og:description" content="Find the best nails, lashes, braids, barbers and more near you. Zero commission — providers keep 100%.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lucidabeauty.co.uk">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lucida — Discover London's Finest Beauty Providers">
+    <meta name="twitter:description" content="Find the best nails, lashes, braids, barbers and more near you. Zero commission.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        /* === RESET === */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* === VARIABLES === */
+        :root {
+            --mahogany: #2a120a;
+            --mahogany-mid: #3d1c12;
+            --mahogany-light: #5a2d1a;
+            --gold: #c8a55a;
+            --gold-light: #e8d5a3;
+            --cream: #faf6f0;
+            --warm-white: #fffbf5;
+            --text-on-dark: #d4c4b0;
+            --text-on-light: #3d1c12;
+            --text-muted: #8a7560;
+
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+
+            --max-width: 1200px;
+            --section-pad: clamp(80px, 10vw, 140px);
+            --side-pad: clamp(20px, 5vw, 60px);
+        }
+
+        /* === BASE === */
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        body {
+            font-family: var(--font-body);
+            font-size: 1.0625rem;
+            line-height: 1.7;
+            color: var(--text-on-dark);
+            background: var(--mahogany);
+            overflow-x: hidden;
+        }
+
+        /* === GRAIN OVERLAY === */
+        .grain {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* === TYPOGRAPHY === */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 500;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+        }
+        h1 { font-size: clamp(2.75rem, 6vw, 5rem); }
+        h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+        h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+
+        /* === UTILITIES === */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--side-pad);
+        }
+        .sparkle {
+            color: var(--gold);
+            font-size: 0.8em;
+            display: inline-block;
+            animation: sparkle-rotate 6s ease-in-out infinite;
+        }
+        @keyframes sparkle-rotate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(15deg) scale(1.1); }
+        }
+        .divider {
+            width: 60px;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 2rem;
+        }
+
+        /* === SCROLL REVEAL === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === NAVIGATION === */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 18px var(--side-pad);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+        nav.scrolled {
+            background: rgba(42, 18, 10, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 1px 0 rgba(200, 165, 90, 0.1);
+        }
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+        .nav-cta {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--mahogany);
+            background: var(--gold);
+            padding: 10px 24px;
+            border-radius: 100px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+        .nav-cta:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(200, 165, 90, 0.3);
+        }
+
+        /* === HERO === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px var(--side-pad) var(--section-pad);
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 15%;
+            transform: translate(50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(200, 165, 90, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .hero-content { max-width: 560px; }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--gold);
+            background: rgba(200, 165, 90, 0.08);
+            border: 1px solid rgba(200, 165, 90, 0.15);
+            padding: 8px 16px;
+            border-radius: 100px;
+            margin-bottom: 32px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .hero h1 {
+            color: var(--cream);
+            margin-bottom: 24px;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold);
+        }
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-on-dark);
+            margin-bottom: 40px;
+            max-width: 480px;
+            line-height: 1.8;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* === BUTTONS === */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--mahogany);
+            background: var(--gold);
+            padding: 14px 32px;
+            border-radius: 100px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.01em;
+        }
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(200, 165, 90, 0.25);
+        }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--gold);
+            padding: 14px 32px;
+            border-radius: 100px;
+            text-decoration: none;
+            border: 1px solid rgba(200, 165, 90, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            background: rgba(200, 165, 90, 0.06);
+            transform: translateY(-2px);
+        }
+
+        /* === PHONE MOCKUP === */
+        .hero-phone {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .phone-mockup {
+            width: 280px;
+            height: 560px;
+            border: 2px solid rgba(200, 165, 90, 0.2);
+            border-radius: 40px;
+            background: linear-gradient(180deg, rgba(26, 10, 5, 0.9) 0%, var(--mahogany) 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 40px 80px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(200, 165, 90, 0.05),
+                inset 0 1px 0 rgba(200, 165, 90, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .phone-notch {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 24px;
+            background: #0d0604;
+            border-radius: 0 0 14px 14px;
+            z-index: 2;
+        }
+        .phone-screen {
+            padding: 44px 20px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .phone-search {
+            width: 100%;
+            height: 38px;
+            border: 1px solid rgba(200, 165, 90, 0.15);
+            border-radius: 12px;
+            background: rgba(200, 165, 90, 0.04);
+        }
+        .phone-chips {
+            display: flex;
+            gap: 6px;
+            overflow: hidden;
+        }
+        .phone-chip {
+            height: 26px;
+            padding: 0 12px;
+            border: 1px solid rgba(200, 165, 90, 0.12);
+            border-radius: 100px;
+            background: rgba(200, 165, 90, 0.04);
+            font-size: 0.6rem;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            font-family: var(--font-body);
+        }
+        .phone-card {
+            width: 100%;
+            height: 80px;
+            border: 1px solid rgba(200, 165, 90, 0.08);
+            border-radius: 14px;
+            background: rgba(200, 165, 90, 0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .phone-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 30%;
+            height: 100%;
+            background: rgba(200, 165, 90, 0.04);
+            border-radius: 14px 0 0 14px;
+        }
+        .phone-card-lg {
+            height: 110px;
+        }
+
+        /* Hero entrance animations */
+        .hero-badge { animation: fadeUp 0.8s ease both; animation-delay: 0.2s; }
+        .hero h1 { animation: fadeUp 0.8s ease both; animation-delay: 0.4s; }
+        .hero p { animation: fadeUp 0.8s ease both; animation-delay: 0.6s; }
+        .hero-buttons { animation: fadeUp 0.8s ease both; animation-delay: 0.8s; }
+        .phone-mockup { animation: fadeUp 0.8s ease both, float 6s ease-in-out infinite; animation-delay: 0.6s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollBounce 2s ease-in-out infinite;
+            opacity: 0.4;
+        }
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* === CATEGORIES === */
+        .categories {
+            background: var(--cream);
+            padding: 60px var(--side-pad);
+            text-align: center;
+        }
+        .categories-label {
+            font-family: var(--font-body);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+        .category-pills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .category-pill {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--mahogany-mid);
+            background: white;
+            padding: 10px 22px;
+            border-radius: 100px;
+            border: 1px solid rgba(61, 28, 18, 0.08);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .category-pill:hover {
+            border-color: var(--gold);
+            color: var(--mahogany);
+            box-shadow: 0 2px 12px rgba(200, 165, 90, 0.15);
+        }
+
+        /* === HOW IT WORKS === */
+        .how-it-works {
+            background: var(--cream);
+            padding: 0 var(--side-pad) var(--section-pad);
+            text-align: center;
+        }
+        .how-it-works h2 {
+            color: var(--text-on-light);
+            margin-bottom: 64px;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .step { text-align: center; }
+        .step-number {
+            width: 56px;
+            height: 56px;
+            border: 1.5px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--gold);
+        }
+        .step h3 {
+            color: var(--text-on-light);
+            margin-bottom: 12px;
+        }
+        .step p {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* === FEATURES === */
+        .features {
+            background: var(--mahogany);
+            padding: var(--section-pad) var(--side-pad);
+        }
+        .features-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        .features h2 {
+            color: var(--cream);
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+        .feature-card {
+            background: rgba(200, 165, 90, 0.04);
+            border: 1px solid rgba(200, 165, 90, 0.08);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+        }
+        .feature-card:hover {
+            border-color: rgba(200, 165, 90, 0.2);
+            background: rgba(200, 165, 90, 0.06);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+        .feature-card h3 {
+            color: var(--cream);
+            margin-bottom: 12px;
+        }
+        .feature-card p {
+            color: var(--text-on-dark);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        /* === FOR PROVIDERS === */
+        .for-providers {
+            background: linear-gradient(180deg, var(--mahogany) 0%, var(--mahogany-mid) 100%);
+            padding: var(--section-pad) var(--side-pad);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .for-providers::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(200, 165, 90, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .for-providers h2 {
+            color: var(--cream);
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .for-providers .container > p {
+            color: var(--text-on-dark);
+            font-size: 1.125rem;
+            max-width: 560px;
+            margin: 0 auto 20px;
+            line-height: 1.8;
+            position: relative;
+        }
+        .highlight {
+            color: var(--gold);
+            font-weight: 500;
+        }
+        .for-providers .btn-primary {
+            margin-top: 24px;
+            position: relative;
+        }
+
+        /* === FINAL CTA === */
+        .final-cta {
+            background: var(--cream);
+            padding: var(--section-pad) var(--side-pad);
+            text-align: center;
+        }
+        .final-cta h2 {
+            color: var(--text-on-light);
+            margin-bottom: 16px;
+        }
+        .final-cta p {
+            color: var(--text-muted);
+            font-size: 1.0625rem;
+            margin-bottom: 36px;
+        }
+        .final-cta .btn-primary {
+            font-size: 1rem;
+            padding: 16px 40px;
+        }
+
+        /* === FOOTER === */
+        footer {
+            background: var(--mahogany);
+            border-top: 1px solid rgba(200, 165, 90, 0.08);
+            padding: 60px var(--side-pad);
+        }
+        .footer-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .footer-brand { max-width: 300px; }
+        .footer-brand .nav-logo {
+            display: block;
+            margin-bottom: 12px;
+        }
+        .footer-brand p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .footer-links {
+            display: flex;
+            gap: 48px;
+        }
+        .footer-col h4 {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+        .footer-col a {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+        .footer-col a:hover { color: var(--gold-light); }
+        .footer-bottom {
+            max-width: var(--max-width);
+            margin: 40px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid rgba(200, 165, 90, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+        .footer-bottom a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        .footer-bottom a:hover { color: var(--gold); }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                text-align: center;
+            }
+            .hero-content { max-width: 100%; }
+            .hero p {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-buttons { justify-content: center; }
+            .phone-mockup {
+                width: 220px;
+                height: 440px;
+            }
+            .steps { grid-template-columns: 1fr; gap: 48px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .footer-inner { flex-direction: column; }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn-primary, .btn-secondary {
+                justify-content: center;
+                text-align: center;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 32px;
+            }
+            .phone-mockup {
+                width: 200px;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="nav-logo">Lucida</a>
+        <a href="#providers" class="nav-cta">List Your Business</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="sparkle">&#10022;</span>
+                    Launching in London
+                </div>
+                <h1>Discover London's finest <em>beauty</em> providers</h1>
+                <p>Find the best nails, lashes, braids, barbers and more near you. Book through their platform &mdash; they keep 100%.</p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.99 2.97 12.5 4.7 9.48C5.55 7.98 7.13 7.01 8.84 6.99C10.12 6.97 11.33 7.87 12.12 7.87C12.91 7.87 14.37 6.78 15.92 6.95C16.57 6.98 18.39 7.21 19.56 8.91C19.47 8.97 17.09 10.35 17.12 13.18C17.15 16.58 20.01 17.69 20.04 17.7C20.01 17.78 19.58 19.25 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
+                        Download for iOS
+                    </a>
+                    <a href="#providers" class="btn-secondary">I'm a Provider &rarr;</a>
+                </div>
+            </div>
+            <div class="hero-phone">
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="phone-search"></div>
+                        <div class="phone-chips">
+                            <div class="phone-chip">Nails</div>
+                            <div class="phone-chip">Braids</div>
+                            <div class="phone-chip">Lashes</div>
+                            <div class="phone-chip">Barber</div>
+                        </div>
+                        <div class="phone-card phone-card-lg"></div>
+                        <div class="phone-card"></div>
+                        <div class="phone-card"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a55a" stroke-width="1.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container reveal">
+            <p class="categories-label">Explore every category</p>
+            <div class="category-pills">
+                <span class="category-pill">Nails</span>
+                <span class="category-pill">Lashes</span>
+                <span class="category-pill">Brows</span>
+                <span class="category-pill">Makeup</span>
+                <span class="category-pill">Barbering</span>
+                <span class="category-pill">Braids</span>
+                <span class="category-pill">Locs</span>
+                <span class="category-pill">Wig Installs</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="divider reveal"></div>
+            <h2 class="reveal">How Lucida works</h2>
+            <div class="steps">
+                <div class="step reveal">
+                    <div class="step-number">1</div>
+                    <h3>Search</h3>
+                    <p>Browse by category, location, or name. Filter by area, rating, and services to find exactly what you need.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">2</div>
+                    <h3>Discover</h3>
+                    <p>Explore portfolios, read honest reviews, and view services with real prices. No hidden fees, no surprises.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">3</div>
+                    <h3>Book</h3>
+                    <p>Tap through to their booking platform. Fresha, Treatwell, Instagram &mdash; however they work, it just works.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="features-inner">
+            <div class="divider reveal"></div>
+            <h2 class="reveal">Built different</h2>
+            <div class="feature-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#10022;</div>
+                    <h3>Zero commission</h3>
+                    <p>Providers keep every penny. We don't take a cut of bookings &mdash; ever. Your favourite providers earn what they deserve.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#10022;</div>
+                    <h3>AI-powered setup</h3>
+                    <p>Providers import their profile from any booking page in under two minutes. Our AI pulls in services, prices, and bio automatically.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#10022;</div>
+                    <h3>Real reviews</h3>
+                    <p>Honest reviews from real clients. No fake ratings, no pay-to-play. Report anything suspicious and we'll investigate.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-icon">&#10022;</div>
+                    <h3>Save &amp; collect</h3>
+                    <p>Build collections of your favourite providers. Nails for Friday, braids for the holiday &mdash; organised however you like.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Providers -->
+    <section class="for-providers" id="providers">
+        <div class="container">
+            <div class="divider reveal"></div>
+            <h2 class="reveal">Your clients are already searching</h2>
+            <p class="reveal">List your business for free. No commission. No contracts. Just more eyes on your work and more clients through your door.</p>
+            <p class="reveal"><span class="highlight">Early bird offer</span> &mdash; the first 10 providers in each category get free lifetime premium, including analytics on views, saves, and click-throughs.</p>
+            <a href="#download" class="btn-primary reveal">List Your Business &mdash; It's Free</a>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="download">
+        <div class="container">
+            <span class="sparkle" style="font-size: 2rem; display: block; margin-bottom: 24px;">&#10022;</span>
+            <h2 class="reveal">Ready to discover?</h2>
+            <p class="reveal">Coming soon to the App Store.</p>
+            <a href="mailto:hello@joinlucida.com?subject=Notify me when Lucida launches" class="btn-primary reveal">Get Notified</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="/" class="nav-logo">Lucida</a>
+                <p>Discover London's finest beauty providers. Built with love in South East London.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="mailto:hello@joinlucida.com">Contact</a>
+                    <a href="https://instagram.com/lucida_uk" target="_blank" rel="noopener">Instagram</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="https://joinlucida.com/terms" target="_blank" rel="noopener">Terms of Service</a>
+                    <a href="https://joinlucida.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Lucida. All rights reserved.</span>
+            <a href="mailto:hello@joinlucida.com">hello@joinlucida.com</a>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Nav scroll effect
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        }, { passive: true });
+
+        // Stagger reveal delays
+        document.querySelectorAll('.steps .reveal').forEach((el, i) => {
+            el.style.transitionDelay = `${i * 0.15}s`;
+        });
+        document.querySelectorAll('.feature-grid .reveal').forEach((el, i) => {
+            el.style.transitionDelay = `${i * 0.1}s`;
+        });
+    </script>
+</body>
+</html>
