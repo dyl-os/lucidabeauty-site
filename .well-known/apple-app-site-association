@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["47Y2BQ3J8L.com.lucidabeauty.app"],
+        "components": [
+          { "/": "/provider/*", "comment": "Provider detail pages" }
+        ]
+      }
+    ]
+  }
+}
