@@ -321,7 +321,7 @@
         .phone-chips {
             display: flex;
             gap: 6px;
-            flex-wrap: wrap;
+            overflow: hidden;
         }
         .phone-chip {
             height: 26px;
@@ -684,6 +684,11 @@
                 width: 200px;
                 height: 400px;
             }
+            .phone-chip {
+                font-size: 0.5rem;
+                padding: 0 8px;
+                height: 22px;
+            }
         }
     </style>
 </head>
@@ -720,10 +725,10 @@
                     <div class="phone-screen">
                         <div class="phone-search"></div>
                         <div class="phone-chips">
-                            <div class="phone-chip">Nails</div>
                             <div class="phone-chip">Braids</div>
-                            <div class="phone-chip">Lashes</div>
                             <div class="phone-chip">Brows</div>
+                            <div class="phone-chip">Lashes</div>
+                            <div class="phone-chip">Nails</div>
                         </div>
                         <div class="phone-card phone-card-lg"></div>
                         <div class="phone-card"></div>
@@ -742,12 +747,12 @@
         <div class="container reveal">
             <p class="categories-label">Explore every category</p>
             <div class="category-pills">
-                <span class="category-pill">Nails</span>
-                <span class="category-pill">Lashes</span>
-                <span class="category-pill">Brows</span>
-                <span class="category-pill">Makeup</span>
                 <span class="category-pill">Braids</span>
+                <span class="category-pill">Brows</span>
+                <span class="category-pill">Lashes</span>
                 <span class="category-pill">Locs</span>
+                <span class="category-pill">Makeup</span>
+                <span class="category-pill">Nails</span>
                 <span class="category-pill">Wig Installs</span>
             </div>
         </div>
