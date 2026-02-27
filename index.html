@@ -576,6 +576,73 @@
             padding: 16px 40px;
         }
 
+        /* === WAITLIST FORM === */
+        .waitlist-form {
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .waitlist-form input[type="email"] {
+            flex: 1;
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            color: var(--text-on-light);
+            background: var(--warm-white);
+            border: 1.5px solid rgba(200, 165, 90, 0.3);
+            border-radius: 100px;
+            padding: 14px 24px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        .waitlist-form input[type="email"]:focus {
+            border-color: var(--gold);
+        }
+        .waitlist-form input[type="email"]::placeholder {
+            color: var(--text-muted);
+        }
+        .waitlist-form button {
+            font-family: var(--font-body);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--mahogany);
+            background: var(--gold);
+            border: none;
+            border-radius: 100px;
+            padding: 14px 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .waitlist-form button:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(200, 165, 90, 0.25);
+        }
+        .waitlist-form button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .waitlist-msg {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            margin-top: 16px;
+            min-height: 20px;
+        }
+        .waitlist-msg.success { color: var(--gold); }
+        .waitlist-msg.error { color: #c0392b; }
+
+        @media (max-width: 480px) {
+            .waitlist-form {
+                flex-direction: column;
+            }
+            .waitlist-form button {
+                text-align: center;
+            }
+        }
+
         /* === FOOTER === */
         footer {
             background: var(--mahogany);
@@ -698,7 +765,7 @@
     <!-- Navigation -->
     <nav>
         <a href="/" class="nav-logo">Lucida</a>
-        <a href="#providers" class="nav-cta">List Your Business</a>
+        <a href="#download" class="nav-cta">List Your Business</a>
     </nav>
 
     <!-- Hero -->
@@ -830,7 +897,11 @@
             <span class="sparkle" style="font-size: 2rem; display: block; margin-bottom: 24px;">&#10022;</span>
             <h2 class="reveal">Ready to discover?</h2>
             <p class="reveal">Coming soon to the App Store.</p>
-            <a href="mailto:hello@joinlucida.com?subject=Notify me when Lucida launches" class="btn-primary reveal">Get Notified</a>
+            <form class="waitlist-form reveal" id="waitlist-form" onsubmit="return false;">
+                <input type="email" id="waitlist-email" placeholder="Enter your email" required autocomplete="email" />
+                <button type="submit" id="waitlist-btn">Notify Me</button>
+            </form>
+            <p class="waitlist-msg" id="waitlist-msg"></p>
         </div>
     </section>
 
@@ -884,6 +955,57 @@
         });
         document.querySelectorAll('.feature-grid .reveal').forEach((el, i) => {
             el.style.transitionDelay = `${i * 0.1}s`;
+        });
+
+        // Waitlist form
+        const SUPABASE_URL = 'https://nrarfywkhysqggqzfsqb.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5yYXJmeXdraHlzcWdncXpmc3FiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwNzk4NTQsImV4cCI6MjA4NjY1NTg1NH0.KXl5-N5gJRwcSG8dJL_HLIZJ_gjIQIqmilmOkDtFtuQ';
+
+        document.getElementById('waitlist-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('waitlist-email');
+            const btn = document.getElementById('waitlist-btn');
+            const msg = document.getElementById('waitlist-msg');
+            const email = emailInput.value.trim().toLowerCase();
+
+            if (!email) return;
+
+            btn.disabled = true;
+            btn.textContent = '...';
+            msg.textContent = '';
+            msg.className = 'waitlist-msg';
+
+            try {
+                const res = await fetch(SUPABASE_URL + '/rest/v1/waitlist', {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+
+                if (res.ok) {
+                    msg.textContent = "You're on the list. We'll be in touch.";
+                    msg.className = 'waitlist-msg success';
+                    emailInput.value = '';
+                } else if (res.status === 409) {
+                    msg.textContent = "You're already on the list — we've got you.";
+                    msg.className = 'waitlist-msg success';
+                    emailInput.value = '';
+                } else {
+                    msg.textContent = 'Something went wrong. Try again.';
+                    msg.className = 'waitlist-msg error';
+                }
+            } catch {
+                msg.textContent = 'Something went wrong. Try again.';
+                msg.className = 'waitlist-msg error';
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Notify Me';
         });
     </script>
 </body>
