@@ -12,11 +12,16 @@
     <meta property="og:description" content="Find the best nails, lashes, braids and more near you. Zero commission — providers keep 100%.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lucidabeauty.co.uk">
+    <meta property="og:image" content="https://lucidabeauty.co.uk/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <link rel="canonical" href="https://lucidabeauty.co.uk/" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Lucida — Discover London's Finest Beauty Providers">
     <meta name="twitter:description" content="Find the best nails, lashes, braids and more near you. Zero commission.">
+    <meta name="twitter:image" content="https://lucidabeauty.co.uk/og-image.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -625,10 +630,16 @@
             transform: none;
             box-shadow: none;
         }
+        .waitlist-hint {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
         .waitlist-msg {
             font-family: var(--font-body);
             font-size: 0.875rem;
-            margin-top: 16px;
+            margin-top: 8px;
             min-height: 20px;
         }
         .waitlist-msg.success { color: var(--gold); }
@@ -781,9 +792,9 @@
                 <div class="hero-buttons">
                     <a href="#download" class="btn-primary">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.99 2.97 12.5 4.7 9.48C5.55 7.98 7.13 7.01 8.84 6.99C10.12 6.97 11.33 7.87 12.12 7.87C12.91 7.87 14.37 6.78 15.92 6.95C16.57 6.98 18.39 7.21 19.56 8.91C19.47 8.97 17.09 10.35 17.12 13.18C17.15 16.58 20.01 17.69 20.04 17.7C20.01 17.78 19.58 19.25 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
-                        Download for iOS
+                        Join the Waitlist
                     </a>
-                    <a href="#providers" class="btn-secondary">I'm a Provider &rarr;</a>
+                    <a href="#providers" class="btn-secondary">List Your Business &rarr;</a>
                 </div>
             </div>
             <div class="hero-phone">
@@ -885,7 +896,7 @@
         <div class="container">
             <div class="divider reveal"></div>
             <h2 class="reveal">Your clients are already searching</h2>
-            <p class="reveal">List your business for free. No commission. No contracts. Just more eyes on your work and more clients through your door.</p>
+            <p class="reveal">List your business free forever &mdash; no commission, no contracts. More eyes on your work, more clients through your door.</p>
             <p class="reveal"><span class="highlight">Early bird offer</span> &mdash; the first 10 providers in each category get free lifetime premium, including analytics on views, saves, and click-throughs.</p>
             <a href="#download" class="btn-primary reveal">List Your Business &mdash; It's Free</a>
         </div>
@@ -901,6 +912,7 @@
                 <input type="email" id="waitlist-email" placeholder="Enter your email" required autocomplete="email" />
                 <button type="submit" id="waitlist-btn">Notify Me</button>
             </form>
+            <p class="waitlist-hint reveal">No spam. One email when we launch.</p>
             <p class="waitlist-msg" id="waitlist-msg"></p>
         </div>
     </section>
